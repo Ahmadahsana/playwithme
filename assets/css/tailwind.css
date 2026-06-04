@@ -1,0 +1,89 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --color-primary: 99 102 241;
+    --color-accent: 217 70 239;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-surface-950 text-white font-outfit antialiased;
+  }
+
+  ::selection {
+    @apply bg-brand-500/30 text-brand-200;
+  }
+
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-surface-900;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-brand-600 rounded-full;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-brand-500;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-brand-600 to-accent-600 
+           text-white font-semibold rounded-xl transition-all duration-300 
+           hover:scale-105 hover:shadow-lg hover:shadow-brand-500/25 
+           active:scale-95 cursor-pointer select-none;
+  }
+
+  .btn-ghost {
+    @apply inline-flex items-center gap-2 px-6 py-3 border border-white/20 
+           text-white font-medium rounded-xl transition-all duration-300 
+           hover:bg-white/10 hover:border-white/40 
+           active:scale-95 cursor-pointer select-none backdrop-blur-sm;
+  }
+
+  .card-glass {
+    @apply bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl 
+           transition-all duration-300 hover:bg-white/8 hover:border-white/20
+           hover:shadow-xl hover:shadow-brand-500/10;
+  }
+
+  .text-gradient {
+    @apply bg-gradient-to-r from-brand-400 via-accent-400 to-brand-300 bg-clip-text text-transparent;
+  }
+
+  .glow-ring {
+    @apply ring-2 ring-brand-500/50 shadow-lg shadow-brand-500/20;
+  }
+
+  .section-padding {
+    @apply px-4 sm:px-6 lg:px-8;
+  }
+}
+
+@layer utilities {
+  .bg-grid {
+    background-image: 
+      linear-gradient(rgba(99, 102, 241, 0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(99, 102, 241, 0.05) 1px, transparent 1px);
+    background-size: 50px 50px;
+  }
+
+  .noise-texture {
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E");
+  }
+}
