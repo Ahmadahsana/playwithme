@@ -27,14 +27,19 @@
         </NuxtLink>
       </div>
 
-      <!-- CTA Buttons -->
+      <!-- Social / Action button on Desktop -->
       <div class="hidden md:flex items-center gap-3">
-        <NuxtLink to="/auth/login" class="btn-ghost !px-4 !py-2 !text-sm">
-          Log In
-        </NuxtLink>
-        <NuxtLink to="/auth/register" class="btn-primary !px-4 !py-2 !text-sm">
-          Get Started
-        </NuxtLink>
+        <a 
+          href="https://github.com" 
+          target="_blank" 
+          rel="noopener noreferrer" 
+          class="btn-ghost !px-4 !py-2 !text-sm flex items-center gap-1.5"
+        >
+          <span>GitHub</span>
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+          </svg>
+        </a>
       </div>
 
       <!-- Mobile Menu Button -->
@@ -76,9 +81,18 @@
           >
             {{ link.label }}
           </NuxtLink>
-          <div class="flex gap-3 pt-2 border-t border-white/10 mt-2">
-            <NuxtLink to="/auth/login" class="btn-ghost !py-2 flex-1 justify-center !text-sm">Log In</NuxtLink>
-            <NuxtLink to="/auth/register" class="btn-primary !py-2 flex-1 justify-center !text-sm">Get Started</NuxtLink>
+          <div class="pt-2 border-t border-white/10 mt-2">
+            <a 
+              href="https://github.com" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              class="btn-ghost !py-2 w-full justify-center !text-sm flex items-center gap-1.5"
+            >
+              <span>GitHub</span>
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+              </svg>
+            </a>
           </div>
         </div>
       </div>
@@ -90,14 +104,16 @@
 </template>
 
 <script setup lang="ts">
+import { ref, onMounted, onUnmounted } from 'vue'
+
 const scrolled = ref(false)
 const mobileMenuOpen = ref(false)
 
 const navLinks = [
   { label: 'Home', to: '/' },
-  { label: 'Features', to: '/features' },
-  { label: 'Explore', to: '/explore' },
-  { label: 'Pricing', to: '/pricing' },
+  { label: 'Playground', to: '/playground' },
+  { label: 'About', to: '/about' },
+  { label: 'Contact', to: '/contact' },
 ]
 
 onMounted(() => {

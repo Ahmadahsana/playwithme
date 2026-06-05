@@ -1,214 +1,260 @@
 <template>
-  <div class="relative overflow-hidden">
-    <!-- Background Effects -->
-    <div class="absolute inset-0 bg-grid opacity-50" />
-    <div class="absolute inset-0 noise-texture" />
-    
-    <!-- Gradient Orbs -->
-    <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-brand-600/20 rounded-full blur-3xl animate-float" />
-    <div class="absolute bottom-1/4 right-1/4 w-80 h-80 bg-accent-600/15 rounded-full blur-3xl animate-float" style="animation-delay: -3s;" />
-    <div class="absolute top-3/4 left-1/2 w-64 h-64 bg-brand-500/10 rounded-full blur-2xl animate-float" style="animation-delay: -1.5s;" />
+  <div class="relative min-h-screen overflow-hidden bg-surface-950 text-white font-inter">
+    <!-- 1. Interactive Particle Background -->
+    <HeroCanvas />
 
-    <!-- Hero Section -->
-    <section class="relative min-h-screen flex items-center justify-center section-padding py-24">
-      <div class="max-w-5xl mx-auto text-center">
-        <!-- Badge -->
-        <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-brand-500/10 border border-brand-500/20 text-brand-400 text-sm font-medium mb-8 animate-fade-in">
-          <span class="w-2 h-2 rounded-full bg-brand-400 animate-pulse" />
-          ✨ Nuxt 4 + Tailwind CSS 4 — Built for the Future
-        </div>
+    <!-- 2. Scanline & Film Grain Overlay (Subtle CRT Retro Vibe) -->
+    <div class="absolute inset-0 scanline-overlay pointer-events-none z-30" />
+    <div class="absolute inset-0 noise-texture pointer-events-none z-30 opacity-40" />
 
-        <!-- Heading -->
-        <h1 class="font-outfit font-black text-5xl sm:text-6xl md:text-7xl lg:text-8xl text-white leading-none mb-6 animate-slide-up">
-          Let's
-          <span class="text-gradient block sm:inline"> Play</span>
-          <br class="hidden sm:block">
-          <span class="text-white">Together</span>
-        </h1>
+    <!-- 3. Ambient Glow Orbs -->
+    <div class="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-brand-500/10 rounded-full blur-[120px] pointer-events-none mix-blend-screen" />
+    <div class="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-accent-500/10 rounded-full blur-[100px] pointer-events-none mix-blend-screen" />
 
-        <!-- Subtitle -->
-        <p class="max-w-2xl mx-auto text-lg sm:text-xl text-surface-300 leading-relaxed mb-10 animate-slide-up" style="animation-delay: 0.1s;">
-          An ultra-modern interactive platform crafted with <strong class="text-white">Nuxt 4</strong> and 
-          <strong class="text-white">Tailwind CSS 4</strong>. Fast, beautiful, and built to impress.
-        </p>
-
-        <!-- CTA Buttons -->
-        <div class="flex flex-col sm:flex-row items-center justify-center gap-4 animate-slide-up" style="animation-delay: 0.2s;">
-          <NuxtLink to="/explore" id="hero-explore-btn" class="btn-primary text-base px-8 py-4 animate-pulse-glow">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+    <!-- 4. Main Portal Content -->
+    <div class="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-28 pb-24 flex flex-col items-center">
+      
+      <!-- Top Actions Bar (Audio and Graphic Quality Settings) -->
+      <div class="w-full flex items-center justify-between gap-4 mb-8 sm:mb-12">
+        <!-- Audio Toggle (Guidelines #3 & useAudio) -->
+        <PressableBtn
+          @click="store.toggleAudio(); store.saveAudioToStorage()"
+          class="flex items-center gap-2.5 px-4 py-2 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20 text-sm font-medium backdrop-blur-md transition-all duration-300"
+          id="audio-toggle-btn"
+        >
+          <IconCrossFade :state-key="store.audioEnabled">
+            <!-- Mute Icon (Crossfade) -->
+            <svg v-if="!store.audioEnabled" class="w-4 h-4 text-surface-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2" />
             </svg>
-            Start Exploring
-          </NuxtLink>
-          <NuxtLink to="/features" id="hero-features-btn" class="btn-ghost text-base px-8 py-4">
-            View Features
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+            <!-- Audio Playing Icon (Crossfade) -->
+            <svg v-else class="w-4 h-4 text-accent-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
             </svg>
-          </NuxtLink>
-        </div>
+          </IconCrossFade>
+          <span class="hidden sm:inline transition-colors" :class="store.audioEnabled ? 'text-accent-400' : 'text-surface-300'">
+            {{ store.audioEnabled ? 'Sound ON' : 'Sound OFF' }}
+          </span>
+        </PressableBtn>
 
-        <!-- Stats -->
-        <div class="flex flex-wrap items-center justify-center gap-8 mt-16 animate-fade-in" style="animation-delay: 0.4s;">
-          <div v-for="stat in stats" :key="stat.label" class="text-center">
-            <div class="font-outfit font-black text-3xl text-white">{{ stat.value }}</div>
-            <div class="text-surface-400 text-sm mt-1">{{ stat.label }}</div>
+        <!-- Particle Quality Selector -->
+        <div class="flex items-center gap-2">
+          <span class="text-xs text-surface-400 hidden md:inline">Particles:</span>
+          <div class="flex items-center rounded-xl bg-white/5 border border-white/10 p-0.5 backdrop-blur-md">
+            <button
+              v-for="q in ['low', 'medium', 'high']"
+              :key="q"
+              @click="store.setParticleQuality(q as any); store.saveQualityToStorage()"
+              class="px-3 py-1 rounded-lg text-xs font-semibold uppercase tracking-wider transition-all duration-300"
+              :class="store.particleQuality === q ? 'bg-brand-500/20 text-brand-300 border border-brand-500/30' : 'text-surface-400 hover:text-white'"
+            >
+              {{ q }}
+            </button>
           </div>
         </div>
       </div>
-    </section>
 
-    <!-- Features Section -->
-    <section id="features" class="relative section-padding py-24">
-      <div class="max-w-7xl mx-auto">
-        <!-- Section Header -->
-        <div class="text-center mb-16">
-          <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-accent-500/10 border border-accent-500/20 text-accent-400 text-sm font-medium mb-4">
-            🚀 Features
-          </div>
-          <h2 class="font-outfit font-black text-4xl sm:text-5xl text-white mb-4">
-            Everything you need
-            <span class="text-gradient block">to build amazing things</span>
-          </h2>
-          <p class="text-surface-400 max-w-xl mx-auto text-lg">
-            Packed with powerful features and stunning design patterns to kickstart your next project.
-          </p>
+      <!-- 3D Parallax Title Section -->
+      <div class="w-full flex flex-col items-center mb-16 select-none">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-500/10 border border-brand-500/20 text-brand-400 text-xs font-medium tracking-wide mb-4 animate-fade-in">
+          <span class="w-1.5 h-1.5 rounded-full bg-brand-400 animate-pulse" />
+          ✨ PORTFOLIO TAMAN BERMAIN WEB
         </div>
+        
+        <Portal3DText />
 
-        <!-- Feature Cards -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          <div
-            v-for="feature in features"
-            :key="feature.title"
-            class="card-glass p-6 group cursor-default"
-          >
-            <div class="w-12 h-12 rounded-xl flex items-center justify-center text-2xl mb-4 transition-transform duration-300 group-hover:scale-110" :class="feature.iconBg">
-              {{ feature.icon }}
-            </div>
-            <h3 class="font-outfit font-bold text-xl text-white mb-2 group-hover:text-gradient transition-all duration-300">
-              {{ feature.title }}
-            </h3>
-            <p class="text-surface-400 text-sm leading-relaxed">{{ feature.description }}</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Tech Stack Section -->
-    <section class="relative section-padding py-24 bg-surface-900/30">
-      <div class="max-w-7xl mx-auto text-center">
-        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-brand-500/10 border border-brand-500/20 text-brand-400 text-sm font-medium mb-4">
-          ⚡ Tech Stack
-        </div>
-        <h2 class="font-outfit font-black text-4xl sm:text-5xl text-white mb-4">
-          Powered by the
-          <span class="text-gradient"> latest tech</span>
-        </h2>
-        <p class="text-surface-400 max-w-xl mx-auto text-lg mb-16">
-          Built on cutting-edge technologies to ensure top performance and developer experience.
+        <p class="max-w-xl text-center text-sm sm:text-base text-surface-400 leading-relaxed mt-4 animate-fade-in">
+          Sebuah ruang eksperimen interaktif untuk membuktikan batas maksimal kemampuan web browser secara real-time. Klik salah satu portal di bawah untuk memulai!
         </p>
+      </div>
 
-        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
-          <div
-            v-for="tech in techStack"
-            :key="tech.name"
-            class="card-glass p-5 flex flex-col items-center gap-3 group"
-          >
-            <span class="text-3xl transition-transform duration-300 group-hover:scale-125">{{ tech.logo }}</span>
-            <span class="text-surface-300 text-sm font-medium group-hover:text-white transition-colors">{{ tech.name }}</span>
+      <!-- Playground Grid -->
+      <div class="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 px-2 sm:px-0">
+        <PlaygroundCard
+          v-for="card in cards"
+          :key="card.title"
+          v-bind="card"
+        />
+      </div>
+    </div>
+
+    <!-- 5. Shimmer Loading Screen Overlay (Guidelines #5b) -->
+    <Transition name="fade-overlay">
+      <div 
+        v-if="isLoading" 
+        class="fixed inset-0 z-50 flex flex-col items-center justify-center bg-surface-950 bg-grid"
+      >
+        <div class="absolute inset-0 noise-texture opacity-30" />
+        
+        <!-- Loading UI Container -->
+        <div class="relative w-full max-w-sm px-6 text-center space-y-6 flex flex-col items-center">
+          <!-- Logo Animation -->
+          <div class="w-20 h-20 rounded-2xl bg-gradient-to-br from-brand-500 to-accent-500 flex items-center justify-center shadow-2xl shadow-brand-500/30 animate-pulse-glow">
+            <span class="text-white font-black text-4xl font-outfit select-none">P</span>
           </div>
+
+          <div class="space-y-2">
+            <h2 class="font-outfit font-black text-2xl tracking-wider text-white">PLAYWITHME</h2>
+            <p class="text-xs text-brand-400 font-semibold tracking-widest uppercase">Initializing Canvas & Audio Synth...</p>
+          </div>
+
+          <!-- Custom Shimmer Progress Bar -->
+          <div class="w-full h-1 bg-surface-800 rounded-full overflow-hidden relative border border-white/5">
+            <div 
+              class="h-full bg-gradient-to-r from-brand-500 to-accent-500 transition-all duration-300 ease-out shimmer-progress" 
+              :style="{ width: `${progress}%` }"
+            />
+          </div>
+          <span class="text-xs text-surface-400 font-mono">{{ Math.floor(progress) }}%</span>
         </div>
       </div>
-    </section>
-
-    <!-- CTA Section -->
-    <section class="relative section-padding py-32">
-      <div class="max-w-4xl mx-auto text-center">
-        <div class="card-glass p-12 relative overflow-hidden">
-          <!-- Inner glow -->
-          <div class="absolute inset-0 bg-gradient-to-br from-brand-600/10 via-transparent to-accent-600/10 rounded-2xl" />
-          <div class="relative">
-            <h2 class="font-outfit font-black text-4xl sm:text-5xl text-white mb-4">
-              Ready to <span class="text-gradient">play?</span>
-            </h2>
-            <p class="text-surface-400 text-lg mb-8 max-w-lg mx-auto">
-              Join thousands of users exploring the platform. Start your journey today — it's free!
-            </p>
-            <div class="flex flex-col sm:flex-row gap-4 justify-center">
-              <NuxtLink to="/auth/register" id="cta-register-btn" class="btn-primary text-base px-8 py-4">
-                Create Free Account
-              </NuxtLink>
-              <NuxtLink to="/explore" id="cta-explore-btn" class="btn-ghost text-base px-8 py-4">
-                Explore First
-              </NuxtLink>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+    </Transition>
   </div>
 </template>
 
 <script setup lang="ts">
+import { ref, onMounted } from 'vue'
+import { useAppStore } from '~/stores'
+import { useAudio } from '~/composables/useAudio'
+import HeroCanvas from '~/components/portal/HeroCanvas.vue'
+import Portal3DText from '~/components/portal/Portal3DText.vue'
+import PlaygroundCard from '~/components/portal/PlaygroundCard.vue'
+
 useSeoMeta({
-  title: 'PlayWithMe — Your Modern Interactive Platform',
-  description: 'An ultra-modern interactive platform built with Nuxt 4 and Tailwind CSS 4. Fast, beautiful, and built to impress.',
-  ogTitle: 'PlayWithMe — Your Modern Interactive Platform',
-  ogDescription: 'An ultra-modern interactive platform built with Nuxt 4 and Tailwind CSS 4.',
+  title: 'PlayWithMe — Portfolio Taman Bermain Web',
+  description: 'Taman bermain interaktif untuk membuktikan batas maksimal kemampuan web browser secara real-time. Dibuat dengan Nuxt 4 dan Tailwind CSS 4.',
+  ogTitle: 'PlayWithMe — Portfolio Taman Bermain Web',
+  ogDescription: 'Eksperimen interaktif web browser real-time. Nuxt 4 + Tailwind CSS 4.',
 })
 
-const stats = [
-  { value: '10K+', label: 'Active Users' },
-  { value: '99.9%', label: 'Uptime' },
-  { value: '4.9★', label: 'User Rating' },
-  { value: '50+', label: 'Features' },
-]
+const store = useAppStore()
+// Initialize Audio Synthesis Composable
+useAudio()
 
-const features = [
+const isLoading = ref(true)
+const progress = ref(0)
+
+onMounted(() => {
+  // Simulate loading sequence up to 100% to let assets load and trigger smooth intro
+  const interval = setInterval(() => {
+    progress.value += Math.random() * 20 + 8
+    if (progress.value >= 100) {
+      progress.value = 100
+      clearInterval(interval)
+      setTimeout(() => {
+        isLoading.value = false
+      }, 500)
+    }
+  }, 120)
+})
+
+const cards = [
   {
-    icon: '⚡',
-    title: 'Lightning Fast',
-    description: 'Powered by Nuxt 4 server-side rendering and Nitro engine for blazing-fast performance.',
-    iconBg: 'bg-yellow-500/10 text-yellow-400',
+    title: '🌌 Particle Galaxy',
+    description: 'Ciptakan galaksi partikel tersendiri. Kursor berfungsi sebagai pusat gravitasi interaktif.',
+    to: '/playground/galaxy',
+    icon: '🌌',
+    difficulty: 'Easy',
+    tag: 'Popular',
+    themeColor: 'indigo'
   },
   {
+    title: '🎱 Physics Sandbox',
+    description: 'Simulasi tabrakan fisika 2D secara real-time menggunakan Matter.js di dalam browser.',
+    to: '/playground/physics',
+    icon: '🎱',
+    difficulty: 'Medium',
+    tag: 'MatterJS',
+    themeColor: 'cyan'
+  },
+  {
+    title: '🎨 Generative Art',
+    description: 'Hasilkan karya seni abstrak geometris unik berdasarkan algoritma Perlin noise dan seed random.',
+    to: '/playground/generative',
     icon: '🎨',
-    title: 'Beautiful UI',
-    description: 'Crafted with Tailwind CSS 4 and modern design patterns. Dark mode by default with stunning glassmorphism.',
-    iconBg: 'bg-pink-500/10 text-pink-400',
+    difficulty: 'Medium',
+    tag: 'Custom',
+    themeColor: 'gold'
   },
   {
-    icon: '📱',
-    title: 'Fully Responsive',
-    description: 'Perfectly optimized for all screen sizes, from mobile phones to ultra-wide displays.',
-    iconBg: 'bg-brand-500/10 text-brand-400',
+    title: '🎵 Audio Visualizer',
+    description: 'Visualisasi musik / mikrofon secara real-time menjadi grafik frekuensi gelombang cahaya.',
+    to: '/playground/audio',
+    icon: '🎵',
+    difficulty: 'Hard',
+    tag: 'AudioAPI',
+    themeColor: 'pink'
   },
   {
-    icon: '🔒',
-    title: 'Secure by Default',
-    description: 'Built with security best practices in mind. Authentication-ready with modern security patterns.',
-    iconBg: 'bg-green-500/10 text-green-400',
+    title: '💻 Matrix Rain',
+    description: 'Hujan karakter matrix interaktif yang berinteraksi dengan input ketikan keyboard Anda.',
+    to: '/playground/matrix',
+    icon: '💻',
+    difficulty: 'Easy',
+    tag: 'New',
+    themeColor: 'indigo'
   },
   {
-    icon: '🚀',
-    title: 'SSR & SSG Ready',
-    description: 'Choose between server-side rendering, static generation, or hybrid rendering modes.',
-    iconBg: 'bg-purple-500/10 text-purple-400',
+    title: '🌊 Fluid Cursor',
+    description: 'Kursor dengan jejak cairan warna-warni yang mengalir dinamis menggunakan simulasi fluida WebGL.',
+    to: '/playground/fluid',
+    icon: '🌊',
+    difficulty: 'Hard',
+    tag: 'WebGL',
+    themeColor: 'cyan'
   },
   {
-    icon: '🛠️',
-    title: 'Developer First',
-    description: 'TypeScript-first, auto-imports, hot reload, and excellent DevTools integration.',
-    iconBg: 'bg-orange-500/10 text-orange-400',
+    title: '🐍 Neon Snake',
+    description: 'Game ular klasik dengan visual neon bersinar, efek partikel, dan dukungan gamepad.',
+    to: '/playground/snake',
+    icon: '🐍',
+    difficulty: 'Easy',
+    tag: 'Classic',
+    themeColor: 'gold'
   },
-]
-
-const techStack = [
-  { name: 'Nuxt 4', logo: '💚' },
-  { name: 'Vue 3', logo: '🟢' },
-  { name: 'Tailwind v4', logo: '🎨' },
-  { name: 'TypeScript', logo: '🔷' },
-  { name: 'Vite', logo: '⚡' },
-  { name: 'Nitro', logo: '🚀' },
+  {
+    title: '🃏 3D Card Memory',
+    description: 'Uji daya ingat Anda dengan kartu emoji yang dibalik secara 3D dan memiliki spring haptic.',
+    to: '/playground/memory',
+    icon: '🃏',
+    difficulty: 'Easy',
+    tag: 'CSS3D',
+    themeColor: 'pink'
+  }
 ]
 </script>
+
+<style scoped>
+/* Scanline overlay styling to mimic CRT monitor */
+.scanline-overlay {
+  background: linear-gradient(
+    rgba(18, 16, 16, 0) 50%,
+    rgba(0, 0, 0, 0.12) 50%
+  );
+  background-size: 100% 4px;
+  z-index: 28;
+}
+
+/* Slide out transition for loading screen overlay */
+.fade-overlay-enter-active,
+.fade-overlay-leave-active {
+  transition: opacity 0.6s cubic-bezier(0.25, 1, 0.5, 1),
+              transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.fade-overlay-leave-to {
+  opacity: 0;
+  transform: scale(1.05);
+}
+
+.shimmer-progress {
+  background-size: 200% 100%;
+  animation: barShimmer 1.5s infinite linear;
+}
+
+@keyframes barShimmer {
+  from { background-position: 200% 0; }
+  to   { background-position: -200% 0; }
+}
+</style>
