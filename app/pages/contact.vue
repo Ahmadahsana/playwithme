@@ -163,13 +163,13 @@
               <div class="w-full border-t border-white/5 pt-4 flex flex-col items-center gap-3">
                 <PressableBtn 
                   @click="resetForm" 
-                  class="btn-primary !px-5 !py-2.5 !text-xs font-bold"
+                  class="btn-primary px-5! py-2.5! text-xs! font-bold"
                 >
                   Kirim Pesan Lain
                 </PressableBtn>
                 <PressableBtn 
                   @click="navigateTo('/')" 
-                  class="btn-ghost !px-5 !py-2.5 !text-xs font-bold"
+                  class="btn-ghost px-5! py-2.5! text-xs! font-bold"
                 >
                   Kembali ke Home
                 </PressableBtn>
@@ -230,16 +230,22 @@ const errors = reactive({
 // 1. Touch gestures for Virtual Keyboard dismiss
 let touchStartY = 0
 const onTouchStart = (e: TouchEvent) => {
-  touchStartY = e.touches[0].clientY
+  const touch = e.touches[0]
+  if (touch) {
+    touchStartY = touch.clientY
+  }
 }
 
 const onTouchEnd = (e: TouchEvent) => {
-  const touchEndY = e.changedTouches[0].clientY
-  const deltaY = touchEndY - touchStartY
-  // If keyboard is visible and swiped down > 50px on non-input, blur focus
-  if (deltaY > 50 && isKeyboardVisible.value) {
-    if (document.activeElement && document.activeElement instanceof HTMLElement) {
-      document.activeElement.blur()
+  const touch = e.changedTouches[0]
+  if (touch) {
+    const touchEndY = touch.clientY
+    const deltaY = touchEndY - touchStartY
+    // If keyboard is visible and swiped down > 50px on non-input, blur focus
+    if (deltaY > 50 && isKeyboardVisible.value) {
+      if (document.activeElement && document.activeElement instanceof HTMLElement) {
+        document.activeElement.blur()
+      }
     }
   }
 }
@@ -354,7 +360,7 @@ const startConfetti = () => {
       x: canvas.width / 2,
       y: canvas.height * 0.75,
       size: Math.random() * 8 + 5,
-      color: colors[Math.floor(Math.random() * colors.length)],
+      color: colors[Math.floor(Math.random() * colors.length)] || '#6366f1',
       vx: (Math.random() - 0.5) * 12,
       vy: -Math.random() * 10 - 10, // Upwards force
       rotation: Math.random() * Math.PI * 2,

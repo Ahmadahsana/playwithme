@@ -6,7 +6,7 @@
         <!-- Brand / About -->
         <div class="max-w-md">
           <NuxtLink to="/" class="flex items-center gap-3 mb-4 group">
-            <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-brand-500 to-accent-500 flex items-center justify-center shadow-lg shadow-brand-500/20 group-hover:scale-105 transition-transform">
+            <div class="w-8 h-8 rounded-lg bg-linear-to-br from-brand-500 to-accent-500 flex items-center justify-center shadow-lg shadow-brand-500/20 group-hover:scale-105 transition-transform">
               <span class="text-white font-black text-sm font-outfit">P</span>
             </div>
             <span class="font-outfit font-bold text-lg text-white">

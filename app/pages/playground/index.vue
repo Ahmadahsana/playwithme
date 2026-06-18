@@ -90,7 +90,7 @@
         </p>
         <PressableBtn 
           @click="searchQuery = ''; selectedDifficulty = 'Semua'" 
-          class="btn-primary !px-4 !py-2 !text-xs font-semibold"
+          class="btn-primary px-4! py-2! text-xs! font-semibold"
         >
           Reset Filter
         </PressableBtn>

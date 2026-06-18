@@ -28,11 +28,11 @@
             ref="avatarRef"
             @pointermove="onAvatarMove"
             @pointerleave="onAvatarLeave"
-            class="relative w-52 h-52 sm:w-60 sm:h-60 rounded-3xl p-1 bg-gradient-to-tr from-brand-500 via-accent-500 to-cyan-500 shadow-2xl transition-all duration-300 group cursor-pointer"
+            class="relative w-52 h-52 sm:w-60 sm:h-60 rounded-3xl p-1 bg-linear-to-tr from-brand-500 via-accent-500 to-cyan-500 shadow-2xl transition-all duration-300 group cursor-pointer"
             :style="avatarStyle"
           >
             <!-- Background Pulse Glow -->
-            <div class="absolute -inset-1.5 rounded-[28px] bg-gradient-to-tr from-brand-500 via-accent-500 to-cyan-500 opacity-50 blur-lg group-hover:opacity-75 transition-opacity duration-300 pointer-events-none" />
+            <div class="absolute -inset-1.5 rounded-[28px] bg-linear-to-tr from-brand-500 via-accent-500 to-cyan-500 opacity-50 blur-lg group-hover:opacity-75 transition-opacity duration-300 pointer-events-none" />
             
             <!-- Real Avatar Image -->
             <div class="w-full h-full rounded-[20px] overflow-hidden bg-surface-900 border border-white/10 relative">
@@ -41,7 +41,7 @@
                 alt="Developer Avatar" 
                 class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
               />
-              <div class="absolute inset-0 bg-gradient-to-t from-surface-950/80 via-transparent to-transparent opacity-60 pointer-events-none" />
+              <div class="absolute inset-0 bg-linear-to-t from-surface-950/80 via-transparent to-transparent opacity-60 pointer-events-none" />
             </div>
 
             <!-- Frame Corners decoration -->
@@ -78,7 +78,7 @@
           <div class="flex flex-wrap items-center justify-center md:justify-start gap-4 pt-2">
             <PressableBtn 
               @click="navigateTo('/playground')" 
-              class="btn-primary !px-5 !py-2.5 !text-sm font-semibold flex items-center gap-2"
+              class="btn-primary px-5! py-2.5! text-sm! font-semibold flex items-center gap-2"
             >
               <span>Taman Bermain</span>
               <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -87,7 +87,7 @@
             </PressableBtn>
             <PressableBtn 
               @click="navigateTo('/contact')" 
-              class="btn-ghost !px-5 !py-2.5 !text-sm font-semibold flex items-center gap-2"
+              class="btn-ghost px-5! py-2.5! text-sm! font-semibold flex items-center gap-2"
             >
               <span>Hubungi Saya</span>
               <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -123,7 +123,7 @@
               <!-- Sparkle indicator on hover -->
               <div 
                 v-if="hoveredSkillIdx === idx" 
-                class="absolute top-0 right-0 w-24 h-full bg-gradient-to-l from-brand-500/10 to-transparent pointer-events-none" 
+                class="absolute top-0 right-0 w-24 h-full bg-linear-to-l from-brand-500/10 to-transparent pointer-events-none" 
               />
               
               <div class="flex justify-between items-center mb-2">
@@ -140,7 +140,7 @@
               <!-- Progress Track -->
               <div class="w-full h-2 bg-surface-900 rounded-full overflow-hidden border border-white/5 relative">
                 <div 
-                  class="h-full bg-gradient-to-r from-brand-500 to-cyan-400 transition-all duration-1000 ease-out"
+                  class="h-full bg-linear-to-r from-brand-500 to-cyan-400 transition-all duration-1000 ease-out"
                   :style="{ width: isMounted ? `${skill.value}%` : '0%' }"
                 />
               </div>
@@ -158,8 +158,8 @@
               
               <!-- When a skill is hovered -->
               <Transition name="fade-detail" mode="out-in">
-                <div v-if="hoveredSkill !== null" :key="hoveredSkill.name" class="space-y-4 relative z-10">
-                  <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-brand-500 to-cyan-500 flex items-center justify-center text-xl shadow-lg shadow-brand-500/20">
+                <div v-if="hoveredSkill" :key="hoveredSkill.name" class="space-y-4 relative z-10">
+                  <div class="w-10 h-10 rounded-xl bg-linear-to-br from-brand-500 to-cyan-500 flex items-center justify-center text-xl shadow-lg shadow-brand-500/20">
                     💡
                   </div>
                   <div class="space-y-1">
@@ -227,7 +227,7 @@
             <!-- Card Header -->
             <div class="space-y-4">
               <div 
-                class="w-11 h-11 rounded-xl bg-gradient-to-br flex items-center justify-center text-xl font-bold border border-white/5"
+                class="w-11 h-11 rounded-xl bg-linear-to-br flex items-center justify-center text-xl font-bold border border-white/5"
                 :class="tech.color"
               >
                 {{ tech.emoji }}
@@ -390,7 +390,7 @@ const isDeleting = ref(false)
 let typeTimeout: any = null
 
 const handleType = () => {
-  const fullWord = words[currentWordIdx.value]
+  const fullWord = words[currentWordIdx.value] || ''
   if (isDeleting.value) {
     currentText.value = fullWord.substring(0, currentText.value.length - 1)
   } else {
@@ -515,28 +515,35 @@ const onCardMove = (e: PointerEvent, idx: number) => {
   const x = e.clientX - rect.left
   const y = e.clientY - rect.top
   
-  cardRotation[idx].x = x
-  cardRotation[idx].y = y
-  
-  const centerX = rect.width / 2
-  const centerY = rect.height / 2
-  
-  // Max tilt: 10deg
-  cardRotation[idx].ry = ((x - centerX) / centerX) * 10
-  cardRotation[idx].rx = ((centerY - y) / centerY) * -10
+  const rot = cardRotation[idx]
+  if (rot) {
+    rot.x = x
+    rot.y = y
+    
+    const centerX = rect.width / 2
+    const centerY = rect.height / 2
+    
+    // Max tilt: 10deg
+    rot.ry = ((x - centerX) / centerX) * 10
+    rot.rx = ((centerY - y) / centerY) * -10
+  }
 }
 
 const onCardLeave = (idx: number) => {
   activeCardIdx.value = null
-  cardRotation[idx].rx = 0
-  cardRotation[idx].ry = 0
+  const rot = cardRotation[idx]
+  if (rot) {
+    rot.rx = 0
+    rot.ry = 0
+  }
 }
 
 const cardStyles = computed(() => {
   return techStacks.map((_, idx) => {
     const isHovered = activeCardIdx.value === idx
-    const transform = isHovered
-      ? `perspective(600px) rotateX(${cardRotation[idx].rx}deg) rotateY(${cardRotation[idx].ry}deg) scale3d(1.02, 1.02, 1.02)`
+    const rot = cardRotation[idx]
+    const transform = (isHovered && rot)
+      ? `perspective(600px) rotateX(${rot.rx}deg) rotateY(${rot.ry}deg) scale3d(1.02, 1.02, 1.02)`
       : 'perspective(600px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)'
     
     return {
@@ -548,9 +555,10 @@ const cardStyles = computed(() => {
 
 const spotlightStyles = computed(() => {
   return techStacks.map((_, idx) => {
+    const rot = cardRotation[idx]
     return {
-      '--x': `${cardRotation[idx].x}px`,
-      '--y': `${cardRotation[idx].y}px`
+      '--x': rot ? `${rot.x}px` : '0px',
+      '--y': rot ? `${rot.y}px` : '0px'
     }
   })
 })

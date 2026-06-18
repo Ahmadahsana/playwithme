@@ -90,7 +90,7 @@
         <!-- Loading UI Container -->
         <div class="relative w-full max-w-sm px-6 text-center space-y-6 flex flex-col items-center">
           <!-- Logo Animation -->
-          <div class="w-20 h-20 rounded-2xl bg-gradient-to-br from-brand-500 to-accent-500 flex items-center justify-center shadow-2xl shadow-brand-500/30 animate-pulse-glow">
+          <div class="w-20 h-20 rounded-2xl bg-linear-to-br from-brand-500 to-accent-500 flex items-center justify-center shadow-2xl shadow-brand-500/30 animate-pulse-glow">
             <span class="text-white font-black text-4xl font-outfit select-none">P</span>
           </div>
 
@@ -102,7 +102,7 @@
           <!-- Custom Shimmer Progress Bar -->
           <div class="w-full h-1 bg-surface-800 rounded-full overflow-hidden relative border border-white/5">
             <div 
-              class="h-full bg-gradient-to-r from-brand-500 to-accent-500 transition-all duration-300 ease-out shimmer-progress" 
+              class="h-full bg-linear-to-r from-brand-500 to-accent-500 transition-all duration-300 ease-out shimmer-progress" 
               :style="{ width: `${progress}%` }"
             />
           </div>

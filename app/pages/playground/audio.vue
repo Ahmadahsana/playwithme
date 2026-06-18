@@ -39,7 +39,7 @@
 
     <!-- Main Visualizer Canvas -->
     <div 
-      class="w-full h-full block flex items-center justify-center relative z-10 transition-transform duration-75"
+      class="w-full h-full flex items-center justify-center relative z-10 transition-transform duration-75"
       :class="{ 'animate-shake': isBeat }"
     >
       <canvas ref="canvasEl" class="w-full h-full block bg-transparent" />
@@ -179,7 +179,7 @@
         <div class="space-y-3 pt-6 border-t border-white/5">
           <PressableBtn 
             @click="stopVisualization"
-            class="btn-primary w-full justify-center text-xs py-2.5 font-bold flex items-center gap-2 bg-gradient-to-r from-red-600 to-amber-600 border-none"
+            class="btn-primary w-full justify-center text-xs py-2.5 font-bold flex items-center gap-2 bg-linear-to-r from-red-600 to-amber-600 border-none"
           >
             <span>🛑 Stop Visualization</span>
           </PressableBtn>
@@ -405,7 +405,7 @@ const render = () => {
   let bassSum = 0
   const bassBands = 8 // First 8 frequency bins represent sub-bass/bass
   for (let i = 0; i < bassBands; i++) {
-    bassSum += dataArray[i]
+    bassSum += dataArray[i] || 0
   }
   const averageBass = bassSum / bassBands
   const triggerVal = averageBass * sensitivity.value
@@ -433,7 +433,7 @@ const render = () => {
     c.beginPath()
     for (let i = 0; i < bufferLength; i++) {
       const angle = (i / bufferLength) * Math.PI * 2
-      const val = dataArray[i] * 0.65 * sensitivity.value
+      const val = (dataArray[i] || 0) * 0.65 * sensitivity.value
       
       const r = baseRadius + val
       const x = cx + Math.cos(angle) * r
@@ -457,7 +457,7 @@ const render = () => {
     let x = 0
 
     for (let i = 0; i < bufferLength; i++) {
-      const val = dataArray[i] * 1.2 * sensitivity.value
+      const val = (dataArray[i] || 0) * 1.2 * sensitivity.value
       const barHeight = Math.min(h * 0.7, val)
 
       c.fillStyle = getThemeHSL(i, bufferLength)
@@ -481,7 +481,7 @@ const render = () => {
     let x = 0
 
     for (let i = 0; i < bufferLength; i++) {
-      const v = dataArray[i] / 128.0 // normalized center
+      const v = (dataArray[i] || 128.0) / 128.0 // normalized center
       const y = (v * h) / 2
 
       if (i === 0) {

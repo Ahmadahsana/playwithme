@@ -69,7 +69,7 @@
               </div>
               <!-- Fluid -->
               <div v-else-if="title.includes('Fluid')" class="relative w-full h-full flex items-center justify-center">
-                <div class="w-6 h-6 rounded-full bg-gradient-to-tr from-cyan-400 to-blue-500 blur-[1px] animate-[liquidBlob_3s_infinite_alternate_ease-in-out]" />
+                <div class="w-6 h-6 rounded-full bg-linear-to-tr from-cyan-400 to-blue-500 blur-[1px] animate-[liquidBlob_3s_infinite_alternate_ease-in-out]" />
               </div>
               <!-- Snake -->
               <div v-else-if="title.includes('Snake')" class="relative w-full h-full p-1.5">
@@ -81,7 +81,7 @@
               </div>
               <!-- Memory -->
               <div v-else-if="title.includes('Memory')" class="relative w-full h-full flex items-center justify-center perspective-100">
-                <div class="w-5 h-7 rounded bg-gradient-to-br from-pink-500 to-purple-600 border border-pink-400 flex items-center justify-center font-bold text-[10px] animate-[cardFlip_1.5s_infinite_ease-in-out] transform-style-3d text-white">
+                <div class="w-5 h-7 rounded bg-linear-to-br from-pink-500 to-purple-600 border border-pink-400 flex items-center justify-center font-bold text-[10px] animate-[cardFlip_1.5s_infinite_ease-in-out] transform-style-3d text-white">
                   ?
                 </div>
               </div>
@@ -106,7 +106,7 @@
         </div>
 
         <!-- Title & Description -->
-        <h3 class="font-outfit font-bold text-xl text-white mb-2 transition-all duration-300 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-brand-400 group-hover:to-accent-400">
+        <h3 class="font-outfit font-bold text-xl text-white mb-2 transition-all duration-300 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-linear-to-r group-hover:from-brand-400 group-hover:to-accent-400">
           {{ title }}
         </h3>
         <p class="text-surface-400 text-sm leading-relaxed mb-4">
