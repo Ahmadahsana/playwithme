@@ -10,7 +10,7 @@ export const useAppStore = defineStore('app', () => {
   const highScores = ref<Record<string, number>>({})
 
   // Graphics / visual settings for performance budgets
-  const particleQuality = ref<'low' | 'medium' | 'high'>('high')
+  const particleQuality = ref<'low' | 'medium' | 'high'>('medium')
 
   // --- Getters ---
   const getHighScore = computed(() => (gameId: string) => {

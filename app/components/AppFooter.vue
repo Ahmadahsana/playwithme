@@ -1,20 +1,18 @@
 <template>
-  <footer class="border-t border-white/5 bg-surface-950/80 backdrop-blur-md relative z-40">
+  <footer class="border-t border-white/5 bg-surface-950/80 backdrop-blur-md relative z-20">
     <div class="max-w-7xl mx-auto section-padding py-12">
       <!-- Top Section -->
       <div class="flex flex-col md:flex-row items-start justify-between gap-8 mb-8">
         <!-- Brand / About -->
         <div class="max-w-md">
           <NuxtLink to="/" class="flex items-center gap-3 mb-4 group">
-            <div class="w-8 h-8 rounded-lg bg-linear-to-br from-brand-500 to-accent-500 flex items-center justify-center shadow-lg shadow-brand-500/20 group-hover:scale-105 transition-transform">
-              <span class="text-white font-black text-sm font-outfit">P</span>
-            </div>
+            <AppLogo container-class="w-8 h-8" />
             <span class="font-outfit font-bold text-lg text-white">
-              Play<span class="text-gradient">WithMe</span>
+              ahmad<span class="text-gradient">dev</span>
             </span>
           </NuxtLink>
           <p class="text-surface-400 text-sm leading-relaxed">
-            Sebuah portfolio taman bermain interaktif untuk mendemonstrasikan kapabilitas pemrograman web tingkat lanjut, animasi, dan Web APIs secara real-time.
+            Portfolio taman bermain interaktif milik <NuxtLink to="/about" class="text-white font-semibold hover:text-brand-300 transition-colors">Ahmad Ahsan</NuxtLink> untuk mendemonstrasikan kapabilitas pemrograman web tingkat lanjut, animasi, dan Web APIs secara real-time.
           </p>
         </div>
 
@@ -55,7 +53,7 @@
       <!-- Bottom Bar -->
       <div class="flex flex-col sm:flex-row items-center justify-between gap-4 pt-8 border-t border-white/5">
         <p class="text-surface-500 text-xs">
-          © {{ new Date().getFullYear() }} PlayWithMe. Dibuat dengan dedikasi tinggi menggunakan Nuxt 4 & Tailwind 4.
+          © {{ new Date().getFullYear() }} Ahmad Ahsan · PlayWithMe. Dibuat dengan dedikasi tinggi menggunakan Nuxt 4 & Tailwind 4.
         </p>
         <div class="flex items-center gap-6">
           <NuxtLink to="/privacy" class="text-surface-500 hover:text-white text-xs transition-colors">Privacy Policy</NuxtLink>
@@ -67,6 +65,8 @@
 </template>
 
 <script setup lang="ts">
+import { profile } from '~/data/profile'
+
 const navLinks = [
   { label: 'Home', to: '/' },
   { label: 'Playground', to: '/playground' },
@@ -75,8 +75,8 @@ const navLinks = [
 ]
 
 const socials = [
-  { label: 'GitHub', href: 'https://github.com' },
-  { label: 'LinkedIn', href: 'https://linkedin.com' },
-  { label: 'Twitter/X', href: 'https://x.com' },
+  { label: 'GitHub', href: profile.socials.github },
+  { label: 'LinkedIn', href: profile.socials.linkedin },
+  { label: 'Email', href: `mailto:${profile.email}` },
 ]
 </script>

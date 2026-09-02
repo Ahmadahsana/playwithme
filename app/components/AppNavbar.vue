@@ -6,11 +6,9 @@
     <nav class="max-w-7xl mx-auto section-padding py-4 flex items-center justify-between">
       <!-- Logo -->
       <NuxtLink to="/" class="flex items-center gap-3 group">
-        <div class="w-9 h-9 rounded-xl bg-linear-to-br from-brand-500 to-accent-500 flex items-center justify-center shadow-lg shadow-brand-500/30 group-hover:shadow-brand-500/50 transition-all duration-300 group-hover:scale-110">
-          <span class="text-white font-black text-lg">P</span>
-        </div>
+        <AppLogo container-class="w-9 h-9" />
         <span class="font-outfit font-bold text-xl text-white">
-          Play<span class="text-gradient">WithMe</span>
+          ahmad<span class="text-gradient">dev</span>
         </span>
       </NuxtLink>
 
@@ -29,10 +27,10 @@
 
       <!-- Social / Action button on Desktop -->
       <div class="hidden md:flex items-center gap-3">
-        <a 
-          href="https://github.com" 
-          target="_blank" 
-          rel="noopener noreferrer" 
+        <a
+          :href="profile.socials.github"
+          target="_blank"
+          rel="noopener noreferrer"
           class="btn-ghost px-4! py-2! text-sm! flex items-center gap-1.5"
         >
           <span>GitHub</span>
@@ -82,10 +80,10 @@
             {{ link.label }}
           </NuxtLink>
           <div class="pt-2 border-t border-white/10 mt-2">
-            <a 
-              href="https://github.com" 
-              target="_blank" 
-              rel="noopener noreferrer" 
+            <a
+              :href="profile.socials.github"
+              target="_blank"
+              rel="noopener noreferrer"
               class="btn-ghost py-2! w-full justify-center text-sm! flex items-center gap-1.5"
             >
               <span>GitHub</span>
@@ -105,6 +103,7 @@
 
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted } from 'vue'
+import { profile } from '~/data/profile'
 
 const scrolled = ref(false)
 const mobileMenuOpen = ref(false)

@@ -6,24 +6,24 @@
     :style="parallaxStyles"
   >
     <!-- Cyan Layer (Deepest back layer) -->
-    <h1 class="absolute font-black text-6xl sm:text-8xl md:text-9xl text-accent-500/70 mix-blend-screen pointer-events-none layer-c select-none">
+    <h1 class="absolute font-black text-accent-500/70 mix-blend-screen pointer-events-none layer-c select-none" :class="sizeClass">
       PLAY WITH ME
     </h1>
 
     <!-- Magenta Layer (Back layer) -->
-    <h1 class="absolute font-black text-6xl sm:text-8xl md:text-9xl text-brand-500/70 mix-blend-screen pointer-events-none layer-m select-none">
+    <h1 class="absolute font-black text-brand-500/70 mix-blend-screen pointer-events-none layer-m select-none" :class="sizeClass">
       PLAY WITH ME
     </h1>
 
     <!-- Glow/Neon Shadow Layer (Floating front layer) -->
-    <h1 class="absolute font-black text-6xl sm:text-8xl md:text-9xl text-transparent outline-glow pointer-events-none layer-glow select-none">
+    <h1 class="absolute font-black text-transparent outline-glow pointer-events-none layer-glow select-none" :class="sizeClass">
       PLAY WITH ME
     </h1>
 
     <!-- White Base Layer (Main centered layer) with Cyberpunk Glitch on Hover -->
-    <h1 
-      class="font-black text-6xl sm:text-8xl md:text-9xl text-white relative z-10 transition-all duration-300 group layer-base"
-      :class="{ 'glitch-active': isHovered }"
+    <h1
+      class="font-black text-white relative z-10 transition-all duration-300 group layer-base"
+      :class="[sizeClass, { 'glitch-active': isHovered }]"
     >
       PLAY WITH ME
     </h1>
@@ -32,6 +32,14 @@
 
 <script setup lang="ts">
 import { ref, computed, onMounted, onUnmounted } from 'vue'
+
+// All four stacked layers must share the same size so they align.
+defineProps({
+  sizeClass: {
+    type: String,
+    default: 'text-6xl sm:text-8xl md:text-9xl',
+  },
+})
 
 const mx = ref(0)
 const my = ref(0)

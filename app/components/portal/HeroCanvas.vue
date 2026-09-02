@@ -175,12 +175,17 @@ const updateAndRender = (deltaTime: number) => {
 
   // 2. Draw Constellation lines between close particles
   const len = particles.value.length
-  const maxDistance = 90
+  const maxDistance = 95
+  const maxMouseDist = 160
 
   for (let i = 0; i < len; i++) {
     const pi = particles.value[i]
+    if (!pi) continue
+
+    // Inter-particle connection lines
     for (let j = i + 1; j < len; j++) {
       const pj = particles.value[j]
+      if (!pj) continue
 
       // Do not connect click burst particles to prevent clutter
       if (pi.isClickBurst || pj.isClickBurst) continue
@@ -190,31 +195,53 @@ const updateAndRender = (deltaTime: number) => {
       const dist = Math.sqrt(dx * dx + dy * dy)
 
       if (dist < maxDistance) {
-        // Draw line with opacity based on distance (closer = more opaque)
-        const alpha = (1 - dist / maxDistance) * 0.15
+        const baseAlpha = (1 - dist / maxDistance) * 0.2
+
+        // Check if connection is near the cursor
+        let alpha = baseAlpha
+        let lineWidth = 0.8
+
+        if (activeMouse) {
+          const midX = (pi.x + pj.x) / 2
+          const midY = (pi.y + pj.y) / 2
+          const mouseDist = Math.hypot(midX - activeMouse.x, midY - activeMouse.y)
+          if (mouseDist < maxMouseDist) {
+            const mouseProximity = 1 - mouseDist / maxMouseDist
+            alpha = Math.min(0.6, baseAlpha + mouseProximity * 0.45)
+            lineWidth = 0.8 + mouseProximity * 0.8
+          }
+        }
+
         c.beginPath()
         c.moveTo(pi.x, pi.y)
         c.lineTo(pj.x, pj.y)
-        c.strokeStyle = `rgba(99, 102, 241, ${alpha})` // Brand primary color hue
-        c.lineWidth = 0.8
+        c.strokeStyle = `rgba(99, 102, 241, ${alpha})`
+        c.lineWidth = lineWidth
         c.stroke()
       }
     }
 
-    // Draw line from mouse to close particles
+    // Direct connection line from mouse/cursor to nearby particles
     if (activeMouse && !pi.isClickBurst) {
       const dx = pi.x - activeMouse.x
       const dy = pi.y - activeMouse.y
       const dist = Math.sqrt(dx * dx + dy * dy)
-      const maxMouseDist = 140
 
       if (dist < maxMouseDist) {
-        const alpha = (1 - dist / maxMouseDist) * 0.22
+        const proximity = 1 - dist / maxMouseDist
+        const alpha = Math.min(0.85, proximity * 0.8)
+        const lineWidth = proximity * 1.6 + 0.8
+
+        // Beautiful vibrant gradient from cursor (cyan) to particle (magenta/indigo)
+        const gradient = c.createLinearGradient(activeMouse.x, activeMouse.y, pi.x, pi.y)
+        gradient.addColorStop(0, `rgba(6, 182, 212, ${alpha})`)
+        gradient.addColorStop(1, `rgba(217, 70, 239, ${alpha})`)
+
         c.beginPath()
-        c.moveTo(pi.x, pi.y)
-        c.lineTo(activeMouse.x, activeMouse.y)
-        c.strokeStyle = `rgba(217, 70, 239, ${alpha})` // Accent pink color hue
-        c.lineWidth = 1.0
+        c.moveTo(activeMouse.x, activeMouse.y)
+        c.lineTo(pi.x, pi.y)
+        c.strokeStyle = gradient
+        c.lineWidth = lineWidth
         c.stroke()
       }
     }

@@ -45,8 +45,47 @@
                   Kirim <span class="text-gradient">Pesan</span>
                 </h1>
                 <p class="text-surface-400 text-xs sm:text-sm">
-                  Punya pertanyaan, ide kolaborasi, atau sekadar ingin menyapa? Isi form di bawah ini.
+                  Punya pertanyaan, ide kolaborasi, atau sekadar ingin menyapa? Isi form di bawah — tombol kirim akan membuka aplikasi email Anda dengan pesan yang sudah terisi.
                 </p>
+              </div>
+
+              <!-- Direct contact channels -->
+              <div class="flex flex-wrap gap-2">
+                <a
+                  :href="`mailto:${profile.email}`"
+                  class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 hover:border-brand-500/40 text-xs text-surface-300 transition-colors"
+                >
+                  <svg class="w-3.5 h-3.5 text-brand-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
+                  {{ profile.email }}
+                </a>
+                <a
+                  v-if="profile.socials.whatsapp"
+                  :href="`https://wa.me/${profile.socials.whatsapp}`"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-green-500/10 border border-green-500/20 hover:border-green-500/40 text-xs text-green-400 transition-colors"
+                >
+                  <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.71.306 1.263.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.488" /></svg>
+                  Chat WhatsApp
+                </a>
+                <a
+                  :href="profile.socials.github"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 hover:border-brand-500/40 text-xs text-surface-300 transition-colors"
+                >
+                  <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
+                  GitHub
+                </a>
+                <a
+                  :href="profile.socials.linkedin"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 hover:border-brand-500/40 text-xs text-surface-300 transition-colors"
+                >
+                  <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
+                  LinkedIn
+                </a>
               </div>
 
               <!-- Contact Form -->
@@ -130,7 +169,7 @@
                   class="btn-primary w-full justify-center text-sm py-3 font-semibold relative overflow-hidden"
                 >
                   <span v-if="!isSubmitting" class="flex items-center gap-2">
-                    Kirim Pesan
+                    Buka Email &amp; Kirim
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
                     </svg>
@@ -141,7 +180,7 @@
                       <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" />
                       <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
                     </svg>
-                    <span>Mengirim...</span>
+                    <span>Membuka email...</span>
                   </span>
                 </PressableBtn>
               </form>
@@ -154,9 +193,11 @@
               </div>
               
               <div class="space-y-2">
-                <h2 class="font-outfit font-black text-2xl text-white">PESAN TERKIRIM!</h2>
+                <h2 class="font-outfit font-black text-2xl text-white">EMAIL SIAP DIKIRIM!</h2>
                 <p class="text-surface-400 text-xs sm:text-sm max-w-sm mx-auto leading-relaxed">
-                  Terima kasih! Pesan Anda telah sukses ditransmisikan. Saya akan menghubungi Anda kembali secepatnya.
+                  Aplikasi email Anda seharusnya sudah terbuka dengan pesan yang terisi — tinggal tekan kirim di sana.
+                  Kalau tidak terbuka, kirim manual ke
+                  <a :href="`mailto:${profile.email}`" class="text-brand-300 hover:text-brand-200 underline underline-offset-2">{{ profile.email }}</a>.
                 </p>
               </div>
 
@@ -200,12 +241,13 @@ import { useRouter } from 'vue-router'
 import { useHaptics } from '~/composables/useHaptics'
 import { useKeyboardAware } from '~/composables/useKeyboardAware'
 import PressableBtn from '~/components/ui/PressableBtn.vue'
+import { profile } from '~/data/profile'
 
 useSeoMeta({
-  title: 'Hubungi Ahmad Ahsan — PlayWithMe',
-  description: 'Hubungi Ahmad Ahsan. Kirim pesan, diskusikan proyek web kreatif, visual shader, atau kolaborasi game web interaktif.',
-  ogTitle: 'Contact Ahmad Ahsan — PlayWithMe',
-  ogDescription: 'Form kontak interaktif Ahmad Ahsan dengan validasi real-time dan notifikasi responsif.',
+  title: `Hubungi ${profile.name} — PlayWithMe`,
+  description: `Hubungi ${profile.name}, Full Stack Web Developer. Diskusikan proyek web, kolaborasi, atau kerja freelance.`,
+  ogTitle: `Hubungi ${profile.name} — PlayWithMe`,
+  ogDescription: `Form kontak ${profile.name} dengan validasi real-time — langsung terhubung ke email.`,
 })
 
 const router = useRouter()
@@ -415,7 +457,7 @@ const navigateTo = (path: string) => {
   router.push(path)
 }
 
-// 7. Form Submission
+// 7. Form Submission — hand the composed message off to the visitor's mail client
 const handleSubmit = () => {
   // Validate
   if (!validateForm()) {
@@ -426,22 +468,35 @@ const handleSubmit = () => {
   haptics.toggle()
   isSubmitting.value = true
 
-  // Simulate network dispatch delay
+  const subject = `Pesan dari ${form.name} lewat PlayWithMe`
+  const body =
+    `Nama : ${form.name}\n` +
+    `Email: ${form.email}\n\n` +
+    `${form.message}\n`
+  const mailtoUrl =
+    `mailto:${profile.email}` +
+    `?subject=${encodeURIComponent(subject)}` +
+    `&body=${encodeURIComponent(body)}`
+
+  // Brief loading beat, then open the mail client and show the confirmation screen.
   setTimeout(() => {
+    if (typeof window !== 'undefined') {
+      window.location.href = mailtoUrl
+    }
     isSubmitting.value = false
     isSuccess.value = true
-    
+
     // Physical trust feedback
     haptics.success()
-    
+
     // Procedural sound chime
     playSuccessAudio()
-    
+
     // Visual wow factor
     setTimeout(() => {
       startConfetti()
     }, 100)
-  }, 1200)
+  }, 600)
 }
 
 const resetForm = () => {
