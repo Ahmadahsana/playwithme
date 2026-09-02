@@ -22,3 +22,7 @@ logs
 .env
 .env.*
 !.env.example
+
+# Deploy artifacts
+playwithme-static.zip
+playwithme-static.tar.gz

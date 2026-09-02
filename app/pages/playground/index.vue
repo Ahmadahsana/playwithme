@@ -183,6 +183,24 @@ const cards = [
     difficulty: 'Easy',
     tag: 'CSS3D',
     themeColor: 'pink'
+  },
+  {
+    title: '♟️ Chess',
+    description: 'Bermain catur melawan AI berbasis algoritma Minimax dengan Alpha-Beta pruning secara real-time.',
+    to: '/playground/chess',
+    icon: '♟️',
+    difficulty: 'Hard',
+    tag: 'New',
+    themeColor: 'indigo'
+  },
+  {
+    title: '🧠 Math Blitz',
+    description: 'Uji kecepatan berhitung dengan soal matematika cepat! Mode Speed, Survival, dan Streak tersedia.',
+    to: '/playground/mathblitz',
+    icon: '🧠',
+    difficulty: 'Medium',
+    tag: 'New',
+    themeColor: 'gold'
   }
 ]
 

@@ -34,25 +34,25 @@
         <!-- Owner Identity Card -->
         <NuxtLink
           to="/about"
-          class="group mt-6 inline-flex items-center gap-3 pl-1.5 pr-4 py-1.5 rounded-full bg-white/5 border border-white/10 hover:bg-white/10 hover:border-brand-500/40 backdrop-blur-md transition-all duration-300 animate-fade-in"
+          class="group mt-7 inline-flex items-center gap-3.5 pl-2 pr-6 py-2 rounded-full bg-white/5 border border-white/10 hover:bg-white/10 hover:border-brand-500/40 hover:scale-[1.03] active:scale-95 backdrop-blur-md transition-all duration-300 animate-fade-in shadow-lg shadow-black/20"
         >
-          <span class="relative w-9 h-9 rounded-full p-px bg-linear-to-tr from-brand-500 via-accent-500 to-cyan-500 shrink-0">
+          <span class="relative w-14 h-14 rounded-full p-0.5 bg-linear-to-tr from-brand-500 via-accent-500 to-cyan-500 shrink-0">
             <img
               src="/avatar.png"
               alt="Foto Ahmad Ahsan"
               class="w-full h-full rounded-full object-cover bg-surface-900"
             />
-            <span class="absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full bg-green-400 border-2 border-surface-950" aria-hidden="true" />
+            <span class="absolute bottom-0 right-0 w-3.5 h-3.5 rounded-full bg-green-400 border-2 border-surface-950" aria-hidden="true" />
           </span>
           <span class="flex flex-col leading-tight text-left">
-            <span class="text-sm font-semibold text-white">{{ profile.name }}</span>
-            <span class="text-[11px] text-surface-400 group-hover:text-brand-300 transition-colors">{{ profile.roleShort }} · Lihat profil →</span>
+            <span class="text-base sm:text-lg font-semibold text-white">{{ profile.name }}</span>
+            <span class="text-xs sm:text-sm text-surface-400 group-hover:text-brand-300 transition-colors">{{ profile.roleShort }} · Lihat profil →</span>
           </span>
         </NuxtLink>
       </div>
 
       <!-- Playground Grid -->
-      <div class="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 px-2 sm:px-0">
+      <div class="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-6 px-2 sm:px-0">
         <PlaygroundCard
           v-for="card in cards"
           :key="card.title"
@@ -199,6 +199,24 @@ const cards = [
     difficulty: 'Easy',
     tag: 'CSS3D',
     themeColor: 'pink'
+  },
+  {
+    title: '♟️ Chess',
+    description: 'Bermain catur melawan AI berbasis algoritma Minimax dengan Alpha-Beta pruning secara real-time.',
+    to: '/playground/chess',
+    icon: '♟️',
+    difficulty: 'Hard',
+    tag: 'New',
+    themeColor: 'indigo'
+  },
+  {
+    title: '🧠 Math Blitz',
+    description: 'Uji kecepatan berhitung dengan soal matematika cepat! Mode Speed, Survival, dan Streak tersedia.',
+    to: '/playground/mathblitz',
+    icon: '🧠',
+    difficulty: 'Medium',
+    tag: 'New',
+    themeColor: 'gold'
   }
 ]
 </script>
